@@ -1,0 +1,50 @@
+\pdfoutput=1
+\documentclass[11pt]{article}
+
+% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
+% Change to "preprint" to generate a non-anonymous version with page numbers.
+\usepackage[final]{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{microtype}
+\usepackage{inconsolata}
+
+\usepackage{pgfplotstable}
+
+\title{Tag der Technik}
+
+\author{First Author\\
+  <School> \\\And
+  Second Author \\
+  <School> \\}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+At some point there will be a magnificent abstract.
+\end{abstract}
+
+\section{Introduction}
+
+\section{Related Works}
+\cite{vaswani17}
+
+\section{Method}
+
+\section{Results}
+\pgfplotstabletypeset[col sep=comma]{/home/coder/tag-der-technik/test.csv}
+
+\section{Conclusion}
+
+\section*{Acknowledgments}
+Do we want to add stuff here?
+
+\bibliography{bibliography}
+
+\end{document}
