@@ -10,5 +10,7 @@
         "**/*.synctex(busy)": true,
         "**/*.out": true,
         "**/__pycache__": true,
+        "**/.vscode": true,
+        "**/acl_natbib.bst": true,
     }
 }
