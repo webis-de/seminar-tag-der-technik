@@ -23,28 +23,29 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Large language models can be used to tackle natural language tasks that were previously not properly solvable by computers.
-However, some tasks are more difficult than others. Additionally, prompt engineering has a major effect on the quality of the results.
-In a small user study, we demonstrate the effect of prompt engineering on the task of \todo{generating humorous jokes}.
+  Large language models can be used to tackle natural language tasks that were previously not properly solvable by computers.
+  However, some tasks are harder than others. In addition, prompt engineering has a significant impact on the quality of the results.
+  In a small user study, we demonstrate the effect of prompt engineering on the task of \todo{generating humorous jokes}.
 \end{abstract}
 
 \section{Introduction}
 
-Large Language Models~(LLMs) are widely used for natural language tasks in general, especially to generate texts for tasks such as paraphrasing, Q\&A, chatbot interfaces and creative writing. However, the quality of the generated results varies considerably between the tasks. It also depends on the precise formulation of the prompt given to the LLM. This leads the users iteratively refining their prompts to improve effectiveness in a process called prompt engineering.
+Large Language Models~(LLMs) are widely used for natural language tasks in general, especially for text generation for tasks such as paraphrasing, Q\&A, chatbot interfaces and creative writing. However, the quality of the generated results varies considerably from task to task. It also depends on the precise formulation of the prompt given to the LLM. This leads the users to iteratively refine their prompts to improve effectiveness in a process called prompt engineering.
 
-\todo{Generating humorous jokes is an example for a task that is difficult for humans. A good joke often contains a quick setup, followed by an unexpected punchline. It should be related to the given topic, be cohesive and make sense.} Previously, this and many other natural language tasks were impossible for computers to solve to satisfaction. The use of LLMs promises to solve such problems for the first time.
+\todo{Generating humorous jokes is an example for a task that is difficult for humans. A good joke often has a quick setup, followed by an unexpected punchline. It should be related to the given topic, be coherent and make sense.} Previously, this and many other natural language tasks were impossible for computers to solve to satisfaction. The use of LLMs promises to solve such problems for the first time.
 
 The evaluation of generated texts is best performed by humans. In this paper, we perform an analysis of the quality of generated \todo{jokes}.
 
-\section{Related Works}
 
-LLMs use a Transformer-based architecture \cite{vaswani2017} to predict the most probable token based on preceeding tokens. This can be used to generate text based on a given text, the prompt.
+\section{Related Works}
+LLMs use a Transformer-based architecture \cite{vaswani2017} to predict the most likely next token based on preceeding tokens. This can be used to generate text based on a given text, the prompt.
 The Mixtral 8\texttimes 7B model \cite{jiang2024} is an LLM that employs a mixture-of-experts approach to improve the performance for text generation.
 
-For the evaluation of LLMs, existing benchmarks such as BIG-bench \cite{srivastava2023} can be used. It covers a broad range of topics and fields of application. However, it does not incorporate human annotations for evaluation of the LLM-generated texts.
+For the evaluation of LLMs, existing benchmarks such as BIG-bench \cite{srivastava2023} can be used. It covers a broad range of topics and applications. However, it does not incorporate human annotations for the evaluation of LLM-generated texts.
+
 
 \section{Method}
-
+% This is a table that display the information from prompts.csv. That is, it shows the specific template for each prompt class.
 \begin{table}\centering\small
   \pgfplotstabletypeset[
     every head row/.style={
@@ -52,35 +53,30 @@ For the evaluation of LLMs, existing benchmarks such as BIG-bench \cite{srivasta
       after row=\midrule,
     },
     every last row/.style={after row=\bottomrule},
-    columns/Name/.style={column name={Class}, string type,column type=>{\scshape}l},
+    columns/Name/.style={column name={Level}, string type,column type=>{\scshape}l},
     columns/Prompt/.style={column name={Prompt Template}, string type,column type=>{\ttfamily}p{5cm}},
-    assign column name/.style={
-      /pgfplots/table/column name={\normalfont\textbf{#1}}
-    },
+    assign column name/.style={/pgfplots/table/column name={\normalfont\textbf{#1}}},
   ]{../experiments/prompts.csv}
   \caption{Prompt templates for the three classes.}
   \label{tbl:prompts}
 \end{table}
 
-In order to assess the performance of an LLM for the generation of \todo{jokes}, we compile a small dataset of prompts for different topic areas. They are created by combining the prompt templates in Table~\ref{tbl:prompts} with the following topics:
-
-\begin{itemize}[nosep]
-  \begin{multicols}{2}
-\foreachinfile{\x}{../experiments/topics.txt}{
-  \item \x
-}
+To assess the effectiveness of LLMs for generating \todo{jokes}, we compile a small dataset of prompts for different topic areas. They are created by combining the prompt templates in Table~\ref{tbl:prompts} with the following topics:
+% This automatically generates a two-column list of bullet points for the topics
+\begin{itemize}[nosep]\setlength{\multicolsep}{5pt}
+\begin{multicols}{2}
+\foreachinfile{\x}{../experiments/topics.txt}{\item \x}
 \end{multicols}
 \end{itemize}
 
-
 This results in prompts of the levels \textsc{Simple}, \textsc{Advanced} and \textsc{Expert} for each of the topics.
+To generate LLM responses to these prompts, we use the Mixtral 8\texttimes 7B model \cite{jiang2024}. It is instructed to generate the final result encapsulated in \texttt{\textless{}Response\textgreater{}\textless{}/Response\textgreater{}} tags, which are used to extract the core response in post-processing. The model is queried using the Python interface of an Ollama deployment.\footnote{\url{https://github.com/ollama/ollama}}
 
-To generate LLM responses to these prompts, we use the Mixtral 8\texttimes 7B model \cite{jiang2024}. It is instructed to generate the final resulted embedded in \texttt{\textless{}Response\textgreater{}\textless{}/Response\textgreater{}} tags, which are used to extract the core response in postprocessing. The model is queried using the Python interface of its Ollama deployment.\footnote{\url{https://github.com/ollama/ollama}}
-
-Then, human ratings on an integer scale from 1 (bad) to 5 (good) are created through a user annotation experiment. During annotation, the results of the three prompts for a given topic are displayed together but shuffled to ensure a fair and blinded evaluation regarding the different prompt templates, and to allow for comparability.
+Then, human ratings on an integer scale from 1~(bad) to 5 (good) are created through a user annotation experiment. During annotation, the results of the three prompts for a given topic are displayed together but shuffled to ensure a fair and blinded evaluation regarding the different prompt templates, and to allow for comparability.
 
 
 \section{Results}
+% This shows a boxplot of the rating distributions
 \begin{figure}\centering
   \includestandalone[width=\linewidth]{boxplot}
   \caption{Boxplots of the ratings from 1 (bad) to 5 (good) of the LLM-generated responses for the different prompt templates}
@@ -88,12 +84,12 @@ Then, human ratings on an integer scale from 1 (bad) to 5 (good) are created thr
 \end{figure}
 
 
-Figure~\ref{fig:boxplots} shows the ratings resulting from the human annotations.
+Figure~\ref{fig:boxplots} shows the rating distributions resulting based human annotations.
 It can be seen that the \textsc{Expert} prompts yield \todo{higher-quality} results than \todo{...}.
 
 We also noticed that the \textsc{Simple} prompt template produced results that were \todo{...}. The \textsc{Expert} prompts, however, were \todo{...}.
 
-Notable examples for generated responses were \texttt{This is an example for an LLM-generated text.} and  \texttt{This is another example for an LLM-generated text.}\todo{}.
+Notable examples for generated responses were \texttt{This is an example for an LLM-generated text.}\todo{} and  \texttt{This is another example for an LLM-generated text}\todo{}.
 
 
 \section{Conclusion}

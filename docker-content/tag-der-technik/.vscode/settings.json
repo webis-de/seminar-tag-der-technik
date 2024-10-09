@@ -12,5 +12,10 @@
         "**/__pycache__": true,
         "**/.vscode": true,
         "**/acl_natbib.bst": true,
-    }
+    },
+    "editor.rulers": [
+        120
+    ],
+    "markdown.preview.breaks": false,
+    "editor.wordWrap": "on"
 }
