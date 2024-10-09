@@ -1,0 +1,41 @@
+\documentclass[tikz]{standalone}
+\RequirePackage{pgfplots}
+\RequirePackage{expl3,xparse}
+
+\usepgfplotslibrary{statistics}
+
+\ExplSyntaxOn
+\NewDocumentCommand \IfStringInList {mmmm}{ \clist_if_in:nnTF {#2} {#1} {#3} {#4} }
+\ExplSyntaxOff
+\pgfplotsset{
+  compat=1.18,
+  filter by/.style 2 args={
+    /pgfplots/boxplot/data filter/.append code={
+      \edef\tmp{\noexpand\IfStringInList{\thisrow{#1}}{#2}{}{\noexpand\def\noexpand\pgfmathresult{}}}
+      \tmp
+    }
+  }
+}
+
+\usetikzlibrary{patterns}
+\pgfplotscreateplotcyclelist{webis}{
+  semithick,draw=black,fill=white,mark=*,\\
+  semithick,draw=black,pattern=north east lines,mark=o,mark options=solid\\
+  semithick,draw=black,pattern=crosshatch dots,mark=x,mark options=solid\\
+  semithick,draw=black,pattern=crosshatch,mark=x,mark options=solid\\
+  semithick,draw=black,pattern=north west lines\\
+  semithick,draw=black,pattern=grid\\
+}
+
+\begin{document}
+    \begin{tikzpicture}
+        \begin{axis}[
+          boxplot,
+          cycle list name=webis,
+        ]
+        \addplot+[filter by={{Prompt}{simple}}] table[x=Topic,y=Rating] {../experiments/results.csv};
+        \addplot+[filter by={{Prompt}{advanced}}] table[x=Topic,y=Rating] {../experiments/results.csv};
+        \addplot+[filter by={{Prompt}{expert}}] table[x=Topic,y=Rating] {../experiments/results.csv};
+        \end{axis}
+    \end{tikzpicture}
+\end{document}

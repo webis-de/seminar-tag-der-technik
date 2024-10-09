@@ -15,15 +15,21 @@
 \usepackage{microtype}
 \usepackage{inconsolata}
 
-\usepackage{pgfplotstable}
+\usepackage{pgfplotstable, booktabs, siunitx}
 
-\title{Tag der Technik}
+\newcommand{\todo}[1]{\textcolor{orange}{#1\textsuperscript{\footnotesize TODO}}}
+
+\usetikzlibrary{patterns}
+
+\title{Text Quality Analysis for \todo{LLM-Generated Humor}}
 
 % Aufgabe 1
-\author{First Author\\
-  <School> \\\And
-  Second Author \\
-  <School> \\
+\author{\todo{First Author}\\
+  \todo{School (optional)} \\
+  \todo{E-Mail (optional)} \\\And
+  \todo{Second Author} \\
+  \todo{School (optional)} \\
+  \todo{E-Mail (optional)} \\
 }
 
 \begin{document}
@@ -35,12 +41,35 @@ At some point there will be a magnificent abstract.
 \section{Introduction}
 
 \section{Related Works}
-\cite{vaswani17}
+\cite{vaswani2017}
 
 \section{Method}
+\paragraph{Dataset} Novel
+\paragraph{Model} Mixtral 8\texttimes 7B \cite{jiang2024}
 
 \section{Results}
-\pgfplotstabletypeset[col sep=comma]{/home/coder/tag-der-technik/test.csv}
+%\begin{table}\centering\small
+%  \pgfplotstabletypeset[
+%    every head row/.style={
+%      before row=\toprule,
+%      after row=\midrule,
+%    },
+%    every last row/.style={after row=\bottomrule},
+%    columns/Prompt/.style={string type,column type=l},
+%    columns/Accuracy/.style={column name={Accuracy [\%]}, column type={S[table-format=3.1,round-mode=places,round-precision=1]}}, string type,
+%    assign column name/.style={
+%      /pgfplots/table/column name={\textbf{#1}}
+%    },
+%  ]{../experiments/results.csv}
+%  \caption{TODO}
+%  \label{tbl:results}
+%\end{table}
+
+\begin{figure}\centering
+  \includegraphics{boxplot}
+  \caption[TODO]{TODO}
+  \label{label}
+\end{figure}
 
 \section{Conclusion}
 
