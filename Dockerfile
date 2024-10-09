@@ -16,7 +16,7 @@ WORKDIR /home/coder
 COPY <<EOF ./.config/code-server/config.yaml
 bind-addr: 127.0.0.1:8080
 auth: password
-password: c7b0a2d07c022ff8270686bc
+password: c7b0a
 cert: false
 EOF
 
