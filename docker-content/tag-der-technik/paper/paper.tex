@@ -7,7 +7,18 @@
 \usepackage[utf8]{inputenc}
 \usepackage{microtype}
 \usepackage{inconsolata}
+
+\usepackage{enumitem, multicol}
+
 \usepackage{pgfplotstable, booktabs, siunitx}
+\usepackage{standalone, definitions}
+\usepackage{catchfile}
+
+\newcommand{\foreachinfile}[2]{%
+  \CatchFileDef{\foreachinfiletemp}{#2}{}%
+  \foreach #1 in \foreachinfiletemp
+}
+
 
 \newcommand{\todo}[1]{\textcolor{orange}{#1\textsuperscript{\footnotesize TODO}}}
 
@@ -48,9 +59,32 @@ For the evaluation of LLMs, existing benchmarks such as BIG-bench \cite{srivasta
 
 \section{Method}
 
-In order to assess the performance of an LLM for the generation of \todo{jokes}, we compile a small dataset of prompts for different topic areas. They are created by combining the prompt templates in Table~\ref{tab:prompts} with the following topics:
+\begin{table}\centering\small
+  \pgfplotstabletypeset[
+    every head row/.style={
+      before row=\toprule,
+      after row=\midrule,
+    },
+    every last row/.style={after row=\bottomrule},
+    columns/Name/.style={column name={Class}, string type,column type=>{\scshape}l},
+    columns/Prompt/.style={column name={Prompt Template}, string type,column type=>{\ttfamily}p{5cm}},
+    assign column name/.style={
+      /pgfplots/table/column name={\normalfont\textbf{#1}}
+    },
+  ]{../experiments/prompts.csv}
+  \caption{TODO}
+  \label{tbl:prompts}
+\end{table}
 
+In order to assess the performance of an LLM for the generation of \todo{jokes}, we compile a small dataset of prompts for different topic areas. They are created by combining the prompt templates in Table~\ref{tbl:prompts} with the following topics:
 
+\begin{itemize}[nosep]
+  \begin{multicols}{2}
+\foreachinfile{\x}{../experiments/topics.txt}{
+  \item \x
+}
+\end{multicols}
+\end{itemize}
 
 
 This results in prompts of the levels \textsc{Simple}, \textsc{Advanced} and \textsc{Expert} for each of the topics.
@@ -61,25 +95,8 @@ Then, human ratings on an integer scale from 1 (bad) to 5 (good) are created thr
 
 
 \section{Results}
-%\begin{table}\centering\small
-%  \pgfplotstabletypeset[
-%    every head row/.style={
-%      before row=\toprule,
-%      after row=\midrule,
-%    },
-%    every last row/.style={after row=\bottomrule},
-%    columns/Prompt/.style={string type,column type=l},
-%    columns/Accuracy/.style={column name={Accuracy [\%]}, column type={S[table-format=3.1,round-mode=places,round-precision=1]}}, string type,
-%    assign column name/.style={
-%      /pgfplots/table/column name={\textbf{#1}}
-%    },
-%  ]{../experiments/results.csv}
-%  \caption{TODO}
-%  \label{tbl:results}
-%\end{table}
-
 \begin{figure}\centering
-  \includegraphics{boxplot}
+  \includestandalone[width=\linewidth]{boxplot}
   \caption{Boxplots of the ratings from 1 (bad) to 5 (good) of the LLM-generated responses for the different prompt templates}
   \label{fig:boxplots}
 \end{figure}
@@ -91,6 +108,7 @@ It can be seen that the \textsc{Expert} prompts yield \todo{higher-quality} resu
 We also noticed that the \textsc{Simple} prompt template produced results that were \todo{...}. The \textsc{Expert} prompts, however, were \todo{...}.
 
 Notable examples for generated responses were \texttt{This is an example for an LLM-generated text.} and  \texttt{This is another example for an LLM-generated text.}\todo{}.
+
 
 \section{Conclusion}
 
