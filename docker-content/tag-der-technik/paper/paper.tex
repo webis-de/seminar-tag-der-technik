@@ -8,21 +8,7 @@
 \usepackage{microtype}
 \usepackage{inconsolata}
 
-\usepackage{enumitem, multicol}
-
-\usepackage{pgfplotstable, booktabs, siunitx}
-\usepackage{standalone, definitions}
-\usepackage{catchfile}
-
-\newcommand{\foreachinfile}[2]{%
-  \CatchFileDef{\foreachinfiletemp}{#2}{}%
-  \foreach #1 in \foreachinfiletemp
-}
-
-
-\newcommand{\todo}[1]{\textcolor{orange}{#1\textsuperscript{\footnotesize TODO}}}
-
-\usetikzlibrary{patterns}
+\usepackage{definitions}
 
 \title{Text Quality Analysis for \todo{LLM-Generated Humor}}
 
@@ -72,7 +58,7 @@ For the evaluation of LLMs, existing benchmarks such as BIG-bench \cite{srivasta
       /pgfplots/table/column name={\normalfont\textbf{#1}}
     },
   ]{../experiments/prompts.csv}
-  \caption{TODO}
+  \caption{Prompt templates for the three classes.}
   \label{tbl:prompts}
 \end{table}
 

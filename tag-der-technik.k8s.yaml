@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tag-der-technik
+  namespace: webisservices
+spec:
+  selector:
+    matchLabels:
+      app: tag-der-technik
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tag-der-technik
+    spec:
+      containers:
+        - name: tag-der-technik
+          image: ghcr.io/webis-de/seminar-tag-der-technik:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 3
+              memory: 2Gi
+            limits:
+              cpu: 4
+              memory: 3Gi
+          ports:
+            - containerPort: 8080
+              hostPort: 80
+              name: ui-internal
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tag-der-technik
+  namespace: webisservices
+spec:
+  selector:
+    app: tag-der-technik
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: ui-internal
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tag-der-technik
+  namespace: webisservices
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+spec:
+  ingressClassName: "nginx-external"
+  rules:
+    - host: tdt01.web.webis.de
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tag-der-technik
+                port:
+                  name: ui-internal
