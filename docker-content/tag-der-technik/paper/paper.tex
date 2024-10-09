@@ -1,20 +1,12 @@
 \pdfoutput=1
 \documentclass[11pt]{article}
-
-% Change "review" to "final" to generate the final (sometimes called camera-ready) version.
-% Change to "preprint" to generate a non-anonymous version with page numbers.
 \usepackage[final]{acl}
-
-% Standard package includes
 \usepackage{times}
 \usepackage{latexsym}
-
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-
 \usepackage{microtype}
 \usepackage{inconsolata}
-
 \usepackage{pgfplotstable, booktabs, siunitx}
 
 \newcommand{\todo}[1]{\textcolor{orange}{#1\textsuperscript{\footnotesize TODO}}}
@@ -23,7 +15,6 @@
 
 \title{Text Quality Analysis for \todo{LLM-Generated Humor}}
 
-% Aufgabe 1
 \author{\todo{First Author}\\
   \todo{School (optional)} \\
   \todo{E-Mail (optional)} \\\And
@@ -35,17 +26,39 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-At some point there will be a magnificent abstract.
+Large language models are ...
+However, some tasks are more difficult than others. Additionally, prompt engineering still plays a major role...
+In a small user study, we demonstrate the effect of prompt engineering on the task of ........
 \end{abstract}
 
 \section{Introduction}
 
+Large Language Models~(LLMs) are widely used for natural language tasks in general, especially to generate texts for tasks such as paraphrasing, Q\&A, chatbot interfaces and creative writing. However, the quality of the generated results varies considerably between the tasks. It also depends on the precise formulation of the prompt given to the LLM. This leads the users iteratively refining their prompts to improve effectiveness in a process called prompt engineering.
+
+\todo{Generating humorous jokes is an example for a task that is difficult for humans. A good joke often contains a quick setup, followed by an unexpected punchline. It should be related to the given topic, be cohesive and make sense.} Previously, this and many other natural language tasks were impossible for computers to solve to satisfaction. The use of LLMs promises to solve such problems for the first time.
+
+The evaluation of generated texts is best performed by humans. In this paper, we perform an analysis of the quality of generated \todo{jokes}.
+
 \section{Related Works}
-\cite{vaswani2017}
+
+LLMs use a Transformer-based architecture \cite{vaswani2017} to predict the most probable token based on preceeding tokens. This can be used to generate text based on a given text, the prompt.
+The Mixtral 8\texttimes 7B model \cite{jiang2024} is an LLM that employs a mixture-of-experts approach to improve the performance for text generation.
+
+For the evaluation of LLMs, existing benchmarks such as BIG-bench \cite{srivastava2023} can be used. It covers a broad range of topics and fields of application. However, it does not incorporate human annotations for evaluation of the LLM-generated texts.
 
 \section{Method}
-\paragraph{Dataset} Novel
-\paragraph{Model} Mixtral 8\texttimes 7B \cite{jiang2024}
+
+In order to assess the performance of an LLM for the generation of \todo{jokes}, we compile a small dataset of prompts for different topic areas. They are created by combining the prompt templates in Table~\ref{tab:prompts} with the following topics:
+
+
+
+
+This results in prompts of the levels \textsc{Simple}, \textsc{Advanced} and \textsc{Expert} for each of the topics.
+
+To generate LLM responses to these prompts, we use the Mixtral 8\texttimes 7B model \cite{jiang2024}. It is instructed to generate the final resulted embedded in \texttt{\textless{}Response\textgreater{}\textless{}/Response\textgreater{}} tags, which are used to extract the core response in postprocessing. The model is queried using the Python interface of its Ollama deployment.\footnote{\url{https://github.com/ollama/ollama}}
+
+Then, human ratings on an integer scale from 1 (bad) to 5 (good) are created through a user annotation experiment. During annotation, the results of the three prompts for a given topic are displayed together but shuffled to ensure a fair and blinded evaluation regarding the different prompt templates, and to allow for comparability.
+
 
 \section{Results}
 %\begin{table}\centering\small
@@ -67,14 +80,24 @@ At some point there will be a magnificent abstract.
 
 \begin{figure}\centering
   \includegraphics{boxplot}
-  \caption[TODO]{TODO}
-  \label{label}
+  \caption{Boxplots of the ratings from 1 (bad) to 5 (good) of the LLM-generated responses for the different prompt templates}
+  \label{fig:boxplots}
 \end{figure}
+
+
+Figure~\ref{fig:boxplots} shows the ratings resulting from the human annotations.
+It can be seen that the \textsc{Expert} prompts yield \todo{higher-quality} results than \todo{...}.
+
+We also noticed that the \textsc{Simple} prompt template produced results that were \todo{...}. The \textsc{Expert} prompts, however, were \todo{...}.
+
+Notable examples for generated responses were \texttt{This is an example for an LLM-generated text.} and  \texttt{This is another example for an LLM-generated text.}\todo{}.
 
 \section{Conclusion}
 
-\section*{Acknowledgments}
-Do we want to add stuff here?
+We demonstrated the capabilities of Mixtral 8\texttimes 7B to generate \todo{humorous jokes}. In a small user annotation experiment, we compared generations based on three prompts.
+It can be seen that different prompts produced different results\todo{?}, highlighting the motivation behind prompt engineering.
+
+A larger user study with multiple human annotators could help to eliminate potential human preference biases.
 
 \bibliography{bibliography}
 
