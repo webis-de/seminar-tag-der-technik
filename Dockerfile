@@ -20,10 +20,7 @@ password: c7b0a
 cert: false
 EOF
 
-ENV TEXINPUTS="/home/coder/.texpackages:"
-
 COPY --chown=coder:coder docker-content/tag-der-technik ./tag-der-technik
-COPY --chown=coder:coder docker-content/latex-template /home/coder/.texpackages/
 
 WORKDIR tag-der-technik
 EXPOSE 8080
