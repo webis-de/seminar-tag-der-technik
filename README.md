@@ -48,7 +48,8 @@ See `tag-der-technik.k8s.yaml` for a deployment template (some values need to be
 6. Wait for extension installations to complete
 7. Build the paper once (open `paper/paper.tex` and press Strg+S; `paper/paper.pdf` should pop up)
 8. (Recommended) Open `paper/paper.tex`, `paper.paper.pdf`, and `experiments/experiments.ipynb` as shown in the screenshot above
-9. In `experiments.ipynb` click `Select Kernel` > `Python Environments`and choose anyone (e.g., the one marked with a star)
+9. In `experiments.ipynb` click `Select Kernel` > `Python Environments`and choose the kernel marked with a star
+10. (Optional) Collapse the larger code section in Step 2 (after "Evaluation") by clicking on the gray or blue bar to the left of it
 
 **To Test if Everything Works**
 

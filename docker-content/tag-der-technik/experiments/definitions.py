@@ -15,6 +15,7 @@ def fetch_completion(systemprompt: Optional[str], userprompt: str, examples: lis
         model="default",
         messages=messages,
         # temperature=0,
+        max_completion_tokens=200,
     )
     return completion.choices[0].message.content
 
