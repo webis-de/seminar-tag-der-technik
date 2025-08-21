@@ -1,4 +1,4 @@
-<h3 align="center">Tag der Technik 2024</h3>
+<h3 align="center">Tag der Technik 2025</h3>
 <h4 align="center">LLM Research and Paper Writing</h4>
 
 ---
@@ -50,6 +50,7 @@ See `tag-der-technik.k8s.yaml` for a deployment template (some values need to be
 8. (Recommended) Open `paper/paper.tex`, `paper.paper.pdf`, and `experiments/experiments.ipynb` as shown in the screenshot above
 9. In `experiments.ipynb` click `Select Kernel` > `Python Environments`and choose the kernel marked with a star
 10. (Optional) Collapse the larger code section in Step 2 (after "Evaluation") by clicking on the gray or blue bar to the left of it
+11. Reload the window with `Strg+Shift+P` > `Developer: Reload Window`. Without this, the Jupyter Notebook can't render interactive elements!
 
 **To Test if Everything Works**
 

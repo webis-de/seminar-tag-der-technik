@@ -1,14 +1,15 @@
-FROM ghcr.io/coder/code-server:4.92.2-39
+FROM ghcr.io/coder/code-server:latest
 
 USER root
 RUN <<EOF
-dnf install -y texlive-scheme-full latexmk
+apt-get update
+apt install -y texlive-full latexmk
 EOF
 
-RUN dnf install -y pip
+RUN apt install -y python3-pip
 
 RUN <<EOF
-pip install openai
+pip3 install openai ipywidgets ipykernel --break-system-packages
 EOF
 
 USER coder

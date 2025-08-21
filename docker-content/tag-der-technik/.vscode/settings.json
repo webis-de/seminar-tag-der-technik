@@ -17,5 +17,9 @@
         120
     ],
     "markdown.preview.breaks": false,
-    "editor.wordWrap": "on"
+    "editor.wordWrap": "on",
+    "jupyter.widgetScriptSources": [
+        "jsdelivr.com",
+        "unpkg.com"
+    ]
 }
