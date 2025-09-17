@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tag-der-technik
+  name: tag-der-technik-1
   namespace: webisservices
 spec:
   selector:
     matchLabels:
-      app: tag-der-technik
+      app: tag-der-technik-1
   replicas: 1
   template:
     metadata:
       labels:
-        app: tag-der-technik
+        app: tag-der-technik-1
     spec:
       containers:
-        - name: tag-der-technik
+        - name: tag-der-technik-1
           image: ghcr.io/webis-de/seminar-tag-der-technik:latest
           imagePullPolicy: Always
           resources:
@@ -33,11 +33,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tag-der-technik
+  name: tag-der-technik-1
   namespace: webisservices
 spec:
   selector:
-    app: tag-der-technik
+    app: tag-der-technik-1
   ports:
     - port: 80
       protocol: TCP
@@ -47,7 +47,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: tag-der-technik
+  name: tag-der-technik-1
   namespace: webisservices
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
@@ -61,6 +61,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: tag-der-technik
+                name: tag-der-technik-1
                 port:
                   name: ui-internal
